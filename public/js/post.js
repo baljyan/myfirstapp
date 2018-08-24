@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-  
   $('form').submit(function(event){
 	var arg = $('#inp_name').val();
 	event.preventDefault();

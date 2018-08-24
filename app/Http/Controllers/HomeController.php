@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -17,27 +17,16 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('home');
-    }
-	
-	/**
-     * Show all users from DB.
-     */
-	public function allusers()
-    {
-        $users = DB::table('users')->get();
-		return view('home', compact('users'));
-    }
-	
-	public function show()
+	public function execute(Request $request)
 	{
-		var_dump($_POST['inp_name']);
+    	$data = $request->all();
+		if(isset($data['byname']))
+			$users = User::orderBy('name', 'asc')->get();
+		elseif(isset($data['byemail']))
+			$users = User::orderBy('email', 'asc')->get();
+		else
+			$users = User::all();
+			
+		return view('home', array('users' => $users));
 	}
 }

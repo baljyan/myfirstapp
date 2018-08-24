@@ -22,6 +22,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home', 'HomeController@allusers');
-Route::get('/home', 'HomeController@show');
+
+Route::match(['get','post'],'/home',['uses'=>'HomeController@execute','as'=>'home']);
+
+Route::match(['get','post'],'/editor/{id?}',['uses'=>'EditorController@execute','as'=>'editor']);
+Route::match(['get','post'],'/delete/{id?}',['uses'=>'DeleteController@execute','as'=>'delete']);
+Route::match(['get','post'],'/edit',['uses'=>'EditController@execute','as'=>'edit']);
